@@ -23,6 +23,9 @@ public class App implements ConfigurationKeys {
     
 	public static void main( String[] args ) {
 		
+		//0. Initialize mongo client
+		MongoClient mongo = initializeMongoClient();
+		
 		//Shutdown hook up to clean all the states.
 		Runtime.getRuntime().addShutdownHook(new Thread() {
     		@Override
@@ -31,7 +34,8 @@ public class App implements ConfigurationKeys {
     				Thread.sleep(200);
     				System.out.println("Shutting down managers ...");
     				ActionManager.stop();
-    				DatasetManager.stop();	
+    				DatasetManager.stop();
+    				mongo.close();
     			}
     			catch(InterruptedException e) {
     				e.printStackTrace();
@@ -39,8 +43,6 @@ public class App implements ConfigurationKeys {
     		}
     	});
     	
-		//0. Initialize mongo client
-		MongoClient mongo = initializeMongoClient();
     	
     	//1. Initialize the Action Manager thread
     	ActionPersistance aPersistance = new MongoActionPersistance(mongo);
@@ -58,8 +60,7 @@ public class App implements ConfigurationKeys {
     	//4. Join all the initialized threads
     	ActionManager.join();
     	DatasetManager.join();
-    	
-    	
+    	mongo.close();
     }
 	
 	/**
