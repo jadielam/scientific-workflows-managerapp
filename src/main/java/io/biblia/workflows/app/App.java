@@ -71,10 +71,11 @@ public class App implements ConfigurationKeys {
     	DecisionManager.start(dPersistance, alg, rollingWindow);
     	
     	//4. Join all the initialized threads
-    	ActionManager.join();
-    	DatasetManager.join();
+    	
     	DecisionManager.join();
     	*/
+    	ActionManager.join();
+    	DatasetManager.join();
     	mongo.close();
     }
 	
