@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 
+import io.biblia.workflows.utils.MongoClientBuilder;
 import io.biblia.workflows.Configuration;
 import io.biblia.workflows.ConfigurationKeys;
 import io.biblia.workflows.manager.action.ActionManager;
@@ -29,7 +30,7 @@ public class App implements ConfigurationKeys {
 	public static void main( String[] args ) {
 		
 		//0. Initialize mongo client
-		MongoClient mongo = initializeMongoClient();
+		MongoClient mongo = MongoClientBuilder.getMongoClient();
 		
 		//Shutdown hook up to clean all the states.
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -77,21 +78,4 @@ public class App implements ConfigurationKeys {
     	mongo.close();
     }
 	
-	/**
-	 * Creates a MongoClient that supports multithreading.
-	 * @return
-	 */
-	private static MongoClient initializeMongoClient() {
-		String mongo_host = Configuration.getValue(MONGODB_HOST, "192.168.99.100");
-		int mongo_port = Integer.parseInt(Configuration.getValue(MONGODB_PORT, "27017"));
-		MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
-		builder.threadsAllowedToBlockForConnectionMultiplier(50000);
-		builder.socketKeepAlive(true);
-		builder.connectionsPerHost(10000);
-		builder.minConnectionsPerHost(2500);
-		MongoClientOptions options = builder.build();
-		
-		MongoClient mongo = new MongoClient(new ServerAddress(mongo_host, mongo_port), options);
-		return mongo;
-	}
 }
