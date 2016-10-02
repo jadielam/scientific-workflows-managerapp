@@ -30,20 +30,22 @@
   
   <build>
   	<plugins>
-  		
-  		<plugin>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <archive>
-          <manifest>
-            <mainClass>io.biblia.workflows.app.App</mainClass>
-          </manifest>
-        </archive>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-    </plugin>
+
+	<!-- To execute this plugin, call the following in the command line: mvn 
+		clean compile assembly:single -->
+	<plugin>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<configuration>
+			<archive>
+				<manifest>
+					<mainClass>io.biblia.workflows.app.App</mainClass>
+				</manifest>
+			</archive>
+			<descriptorRefs>
+				<descriptorRef>jar-with-dependencies</descriptorRef>
+			</descriptorRefs>
+		</configuration>
+	</plugin>
   		<plugin>
 
 				<groupId>org.apache.maven.plugins</groupId>

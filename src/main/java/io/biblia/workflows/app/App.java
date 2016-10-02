@@ -53,8 +53,7 @@ public class App implements ConfigurationKeys {
     	ActionPersistance aPersistance = new MongoActionPersistance(mongo);
     	ActionManager.start(aPersistance);
     	
-    	/**
-    	 * 
+    	
    
     	//2. Initialize the Dataset Manager thread
     	DatasetPersistance dPersistance = new MongoDatasetPersistance(mongo);
@@ -64,6 +63,7 @@ public class App implements ConfigurationKeys {
     	//3. Initialize the Callback Manager thread
     	CallbackManager.start(aPersistance);
     	
+    	/**
     	//4. Initialize the Decision Manager thread
     	ActionRollingWindow rollingWindow = ActionRollingWindow.getInstance(mongo);
     	DecisionAlgorithm alg = new MostCommonlyUsedDecisionAlgorithm();
@@ -73,8 +73,8 @@ public class App implements ConfigurationKeys {
     	ActionManager.join();
     	DatasetManager.join();
     	DecisionManager.join();
-    	mongo.close();
     	*/
+    	mongo.close();
     }
 	
 	/**
