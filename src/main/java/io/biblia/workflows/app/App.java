@@ -19,6 +19,7 @@ import io.biblia.workflows.manager.decision.DecisionManager;
 import io.biblia.workflows.manager.decision.MongoDatasetLogDao;
 import io.biblia.workflows.manager.decision.MostCommonlyUsedDecisionAlgorithm;
 import io.biblia.workflows.manager.action.CallbackManager;
+import io.biblia.workflows.manager.action.Callback;
 import io.biblia.workflows.manager.decision.DecisionAlgorithm;
 
 /**
@@ -62,7 +63,8 @@ public class App implements ConfigurationKeys {
     	DatasetManager.start(dPersistance, dLogDao);
     	
     	//3. Initialize the Callback Manager thread
-    	CallbackManager.start(aPersistance);
+    	Callback callback = new Callback(aPersistance, dPersistance, dLogDao);
+    	CallbackManager.start(aPersistance, callback);
     	
     	/**
     	//4. Initialize the Decision Manager thread
