@@ -42,6 +42,7 @@ public class App implements ConfigurationKeys {
     				System.out.println("Shutting down managers ...");
     				ActionManager.stop();
     				DatasetManager.stop();
+    				DecisionManager.stop();
     				mongo.close();
     			}
     			catch(InterruptedException e) {
